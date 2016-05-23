@@ -1,6 +1,6 @@
 defmodule Wikir.Permission do
   use Wikir.Web, :model
-
+  
   schema "permissions" do
     field :type, :string
 

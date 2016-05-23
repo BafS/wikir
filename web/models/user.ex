@@ -1,10 +1,13 @@
 defmodule Wikir.User do
   use Wikir.Web, :model
+  use Ecto.Schema
 
   schema "users" do
     field :username, :string
     field :password, :string
-
+    has_many :versions, Wikir.Version
+    belongs_to :group, Wikir.Group
+    
     timestamps
   end
 

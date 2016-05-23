@@ -2,7 +2,8 @@ defmodule Wikir.Article do
   use Wikir.Web, :model
 
   schema "articles" do
-
+      has_many :versions, Wikir.Version
+      has_many :permissions, Wikir.Permission
     timestamps
   end
 

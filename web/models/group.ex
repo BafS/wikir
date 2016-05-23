@@ -3,6 +3,8 @@ defmodule Wikir.Group do
 
   schema "groups" do
     field :name, :string
+    has_many :permissions, Wikir.Permission
+    has_many :users, Wikir.User
 
     timestamps
   end
