@@ -11,10 +11,19 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
 
-## Learn more
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: http://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+## Ecto Generation
+
+```
+mix phoenix.gen.html User users username:string password:string
+mix phoenix.gen.model Group groups name:string
+mix phoenix.gen.html Article articles
+mix phoenix.gen.model Permission permissions type:string
+mix phoenix.gen.model Version versions title:string content:text date:date
+```
+
+mix phoenix.gen.html User users username:string password:string group_id:references:groups version_id:references:versions
+mix phoenix.gen.model Group groups name:string permission_id:references:permissions
+mix phoenix.gen.html Article articles version_id:references:versions
+mix phoenix.gen.model Permission permissions type:string user_id:references:users
+mix phoenix.gen.model Version versions title:string content:text date:date user_id:references:users
