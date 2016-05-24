@@ -28,9 +28,10 @@ defmodule Wikir.ArticleController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    article = Repo.get!(Article, id)
-    render(conn, "show.html", article: article)
+  def show(conn, %{"title" => title}) do
+    version = from v in Version, where: v.title == ^title, limit: 1
+    #article = Repo.get!(Article, id)
+    render(conn, "show.html", version: version)
   end
 
   def edit(conn, %{"id" => id}) do

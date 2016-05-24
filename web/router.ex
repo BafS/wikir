@@ -16,9 +16,9 @@ defmodule Wikir.Router do
   scope "/", Wikir do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    #get "/", PageController, :index
 
-    resources "/articles", ArticleController
+    get "/:title", ArticleController, :show
 
     resources "/users", UserController
   end

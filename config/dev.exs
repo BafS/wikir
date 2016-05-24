@@ -35,8 +35,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :wikir, Wikir.Repo,
   adapter: Ecto.Adapters.MySQL,
-  username: "root",
-  password: "",
+  username: "admin",
+  password: "1234",
   database: "wikir_dev",
   hostname: "localhost",
   pool_size: 10
