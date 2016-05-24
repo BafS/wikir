@@ -6,6 +6,7 @@ defmodule Wikir.Version do
     field :title, :string
     field :content, :string
     field :date, Ecto.Date
+    
     belongs_to :article, Wikir.Article
 
     timestamps
