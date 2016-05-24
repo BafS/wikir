@@ -16,9 +16,9 @@ defmodule Wikir.ArticleController do
   end
 
   def show(conn, %{"title" => title}) do
-    version = from v in Version, where: v.title == ^title, limit: 1
+    query = from v in Wikir.Version, where: v.title == ^title, order_by: v.inserted_at
     #article = Repo.get!(Article, id)
-    render(conn, "show.html", version: version)
+    render(conn, "show.html", version: Wikir.Repo.one(query))
   end
 
   def edit(conn, %{"id" => id}) do
