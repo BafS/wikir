@@ -1,8 +1,18 @@
-<h2>Show article</h2>
-
-<ul>
-
+<ul class="nav nav-pills pull-right">
+  <li>
+    <%= link "Edit", to: article_path(@conn, :edit, @article) %>
+  </li>
+  <li>
+    <%= link "Back", to: article_path(@conn, :index) %>
+  </li>
 </ul>
 
-<%= link "Edit", to: article_path(@conn, :edit, @article) %>
-<%= link "Back", to: article_path(@conn, :index) %>
+<div class="container">
+  <div class="article">
+    <h1><%= @article.title %></h1>
+
+    <div class="content">
+      <%= @article.content %>
+    </div>
+  </div>
+</div>
