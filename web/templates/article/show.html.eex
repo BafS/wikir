@@ -11,6 +11,6 @@
   <h1><%= @version.title %></h1>
 
   <div class="content">
-    <%= @version.content %>
+    <%= raw Earmark.to_html(@version.content) %>
   </div>
 </div>
