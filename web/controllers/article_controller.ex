@@ -32,17 +32,14 @@ defmodule Wikir.ArticleController do
   def show(conn, %{"id" => title}) do
     # Get last version (by updated_at)
     version = Repo.one(from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1)
+    article = Repo.get!(Article, version.article_id)
+    # article = Repo.all assoc(version, :article_id)
     # post = List.last(Repo.all(from(v in Version, where: v.title == ^title, order_by: [desc: v.updated_at])))
     # post = List.last(Repo.all(from(v in Version, where: v.title == ^title)))
     # post = List.last(Repo.all(from(v in Version, where: v.title == ^title)))
     # comments = Repo.all assoc(post, :comments)
 
-    # IO.puts post
-    # version = Repo.get!(Version, 1)
-    # article = Repo.get!(Article, title)
-    # article = Repo.get!(Article, title)
-    # render(conn, "show.html", article: query)
-    render(conn, "show.html", article: version)
+    render(conn, "show.html", version: version, article: article)
   end
 
   def edit(conn, %{"id" => id}) do

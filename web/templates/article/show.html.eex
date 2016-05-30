@@ -7,12 +7,10 @@
   </li>
 </ul>
 
-<div class="container">
-  <div class="article">
-    <h1><%= @article.title %></h1>
+<div class="article">
+  <h1><%= @version.title %></h1>
 
-    <div class="content">
-      <%= @article.content %>
-    </div>
+  <div class="content">
+    <%= @version.content %>
   </div>
 </div>
