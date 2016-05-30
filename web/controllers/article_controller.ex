@@ -8,7 +8,8 @@ defmodule Wikir.ArticleController do
 
   def index(conn, _params) do
     articles = Repo.all(Article)
-    render(conn, "index.html", articles: articles)
+    versions = Repo.all(Version)
+    render(conn, "index.html", articles: versions)
   end
 
   def new(conn, _params) do
@@ -44,13 +45,20 @@ defmodule Wikir.ArticleController do
 
   def edit(conn, %{"id" => id}) do
     article = Repo.get!(Article, id)
-    changeset = Article.changeset(article)
-    render(conn, "edit.html", article: article, changeset: changeset)
+    version_last = Repo.one(from v in Version, where: v.article_id == ^id, order_by: [desc: :updated_at], limit: 1)
+    # versions = Repo.all assoc(article, :id)
+    # version = Repo.all assoc(article.id, :article_id)
+
+    changeset = Version.changeset(version_last)
+    render(conn, "edit.html", article: article, version: version_last, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "article" => article_params}) do
     article = Repo.get!(Article, id)
     changeset = Article.changeset(article, article_params)
+
+    # Version.new(conn, %{"id" => id, "article" => article_params})
+    # Repo.insert!(%Version{title: "Main", content: "# Main page with updated content"})
 
     case Repo.update(changeset) do
       {:ok, article} ->
