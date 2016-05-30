@@ -10,11 +10,18 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Wikir.Version
+alias Wikir.Repo
+alias Wikir.User
 alias Wikir.Article
+alias Wikir.Version
 
-Wikir.Repo.insert!(%Version{title: "Test", content: "Test content"})
-Wikir.Repo.insert!(%Version{title: "Truc", content: "# un truc content"})
-# Wikir.Repo.insert!(%Version{title: "Test1", content: "Test content", article_id: 1, user_id: 1})
+Repo.insert!(%Article{})
+Repo.insert!(%Article{})
 
-Wikir.Repo.insert!(%Article{})
+Repo.insert!(%User{username: "admin", password: "123"}) # TODO group_id
+Repo.insert!(%User{username: "user1", password: "123"})
+
+Repo.insert!(%Version{title: "Test", content: "Test content", article_id: 1})
+Repo.insert!(%Version{title: "Main", content: "# Main page", article_id: 2})
+Repo.insert!(%Version{title: "Main", content: "# Main page with updated content", article_id: 2})
+# Repo.insert!(%Version{title: "Test1", content: "Test content", article_id: 1, user_id: 1})
