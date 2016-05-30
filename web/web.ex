@@ -52,6 +52,8 @@ defmodule Wikir.Web do
       import Wikir.Router.Helpers
       import Wikir.ErrorHelpers
       import Wikir.Gettext
+
+      import Wikir.Session, only: [current_user: 1, logged_in?: 1]
     end
   end
 
