@@ -5,7 +5,6 @@ defmodule Wikir.Repo.Migrations.CreateVersion do
     create table(:versions) do
       add :title, :string
       add :content, :text
-      add :date, :date
 
       timestamps
     end
