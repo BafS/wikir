@@ -5,13 +5,13 @@ defmodule Wikir.Version do
   schema "versions" do
     field :title, :string
     field :content, :string
-    
+
     belongs_to :article, Wikir.Article
 
     timestamps
   end
 
-  @required_fields ~w(title content)
+  @required_fields ~w(title content article_id)
   @optional_fields ~w()
 
   @doc """

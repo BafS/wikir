@@ -56,13 +56,16 @@ defmodule Wikir.ArticleController do
   def update(conn, %{"id" => id, "version" => article_params}) do
     article = Repo.get!(Article, id)
     version_last = Repo.one(from v in Version, where: v.article_id == ^id, order_by: [desc: :updated_at], limit: 1)
-    changeset = Version.changeset(version_last, article_params)
+    article_params = Map.put(article_params, "article_id", id)
+    IO.puts "AAAAAAAAAAAA"
+    IO.inspect article_params
+    changeset = Version.changeset(%Version{}, article_params)
     # changeset = Article.changeset(article, article_params)
 
     # Version.new(conn, %{"id" => id, "article" => article_params})
     # Repo.insert!(%Version{title: "Main", content: "# Main page with updated content"})
 
-    case Repo.update(changeset) do
+    case Repo.insert(changeset) do
       {:ok, article} ->
         conn
         |> put_flash(:info, "Article updated successfully.")
