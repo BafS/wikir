@@ -17,12 +17,9 @@ form.link, form.button {
   border-bottom: 1px solid #e5e5e5;
 }
 .logo {
-  width: 519px;
-  height: 71px;
   display: inline-block;
+  padding-left: 5px;
   margin-bottom: 1em;
-  background-image: url("/images/phoenix.png");
-  background-size: 519px 71px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -35,7 +32,7 @@ form.link, form.button {
 /* Customize container */
 @media (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 780px;
   }
 }
 .container-narrow > hr {
@@ -69,4 +66,22 @@ form.link, form.button {
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+
+/* Wikir */
+.article .title {
+  border-bottom: 1px solid #ddd;
+}
+
+.article-panel {
+}
+
+.article-panel ul {
+  padding: 0;
+  margin: 0;
+}
+
+.article textarea {
+  min-height: 150px;
 }

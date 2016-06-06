@@ -27,7 +27,7 @@
             <% end %>
           </ul>
         </nav>
-        <span class="logo"></span>
+        <img class="logo" src="<%= static_path @conn, "/images/wikir.png" %>" />
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
