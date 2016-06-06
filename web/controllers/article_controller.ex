@@ -4,7 +4,7 @@ defmodule Wikir.ArticleController do
   alias Wikir.Article
   alias Wikir.Version
 
-  plug :scrub_params, "article" when action in [:create, :update]
+  # plug :scrub_params, "article" when action in [:create, :update]
 
   def index(conn, _params) do
     articles = Repo.all(Article)
@@ -53,9 +53,11 @@ defmodule Wikir.ArticleController do
     render(conn, "edit.html", article: article, version: version_last, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "article" => article_params}) do
+  def update(conn, %{"id" => id, "version" => article_params}) do
     article = Repo.get!(Article, id)
-    changeset = Article.changeset(article, article_params)
+    version_last = Repo.one(from v in Version, where: v.article_id == ^id, order_by: [desc: :updated_at], limit: 1)
+    changeset = Version.changeset(version_last, article_params)
+    # changeset = Article.changeset(article, article_params)
 
     # Version.new(conn, %{"id" => id, "article" => article_params})
     # Repo.insert!(%Version{title: "Main", content: "# Main page with updated content"})
@@ -64,9 +66,10 @@ defmodule Wikir.ArticleController do
       {:ok, article} ->
         conn
         |> put_flash(:info, "Article updated successfully.")
-        |> redirect(to: article_path(conn, :show, article))
+        |> redirect(to: article_path(conn, :show, article.title))
       {:error, changeset} ->
-        render(conn, "edit.html", article: article, changeset: changeset)
+        render(conn, "edit.html", article: article, version: version_last, changeset: changeset)
+        # render(conn, "edit.html", article: article, changeset: changeset)
     end
   end
 
