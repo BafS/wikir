@@ -2,7 +2,7 @@
 
 <div class="article">
   <%= render "form.html", changeset: @changeset,
-                        action: article_path(@conn, :update, @version) %>
+                        action: article_path(@conn, :update, @article) %>
 </div>
 
 <%= link "Back", to: article_path(@conn, :index) %>

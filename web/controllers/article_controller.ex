@@ -47,14 +47,13 @@ defmodule Wikir.ArticleController do
     render(conn, "show.html", version: version, article: article)
   end
 
-  def edit(conn, %{"id" => id}) do
-    article = Repo.get!(Article, id)
-    version_last = Repo.one(from v in Version, where: v.article_id == ^id, order_by: [desc: :updated_at], limit: 1)
-    # versions = Repo.all assoc(article, :id)
-    # version = Repo.all assoc(article.id, :article_id)
+  def edit(conn, %{"id" => title}) do
+    version_last = Repo.one(from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1)
+    article = Repo.get!(Article, version_last.article_id)
 
     changeset = Version.changeset(version_last)
-    render(conn, "edit.html", article: article, version: version_last, changeset: changeset)
+
+    render(conn, "edit.html", version: version_last, article: article, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "version" => article_params}) do
