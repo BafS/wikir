@@ -22,6 +22,10 @@ defmodule Wikir.ArticleController do
 
     case Repo.insert(changeset) do
       {:ok, _article} ->
+          #article = Repo.one(from a in Article, where: a.title == ^article_params[:title])
+          article_params = Map.put(article_params, "article_id", _article.id)
+          changeset2 = Version.changeset(%Version{}, article_params)
+          Repo.insert(changeset2)
         conn
         |> put_flash(:info, "Article created successfully.")
         |> redirect(to: article_path(conn, :index))
