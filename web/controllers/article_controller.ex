@@ -12,7 +12,19 @@ defmodule Wikir.ArticleController do
   end
 
   def new(conn, _params) do
-    changeset = Article.changeset(%Article{})
+
+    # IO.inspect _params
+    # case _params do
+      # {:title, _params} -> ptitle = "aaa"
+    # end
+    # if _params do
+    #   %{ "title" => ptitle } = _params
+    # end
+    # #
+    # if !ptitle do
+    # end
+
+    changeset = Article.changeset(%Version{})
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -35,18 +47,29 @@ defmodule Wikir.ArticleController do
 
   def show(conn, %{"id" => title}) do
     # Get last version (by updated_at)
-    version = Repo.one(from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1)
+    version_last = Repo.one(from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1)
 
-    render(conn, "show.html", version: version)
+    if !version_last do
+      conn
+      |> redirect(to: article_path(conn, :new))
+    end
+
+    render(conn, "show.html", version: version_last)
   end
 
   def edit(conn, %{"id" => title}) do
     version_last = Repo.one(from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1)
+
+    if !version_last do
+      conn
+      |> redirect(to: article_path(conn, :new))
+    end
+
     article = Repo.get!(Article, version_last.article_id)
 
-    changeset = Version.changeset(version_last)
+    changeset = Version.changeset version_last
 
-    render(conn, "edit.html", version: version_last, article: article, changeset: changeset)
+    render conn, "edit.html", article: article, changeset: changeset
   end
 
   def update(conn, %{"id" => id, "version" => article_params}) do

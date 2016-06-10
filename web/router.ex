@@ -18,7 +18,7 @@ defmodule Wikir.Router do
 
     get "/", PageController, :index
 
-    resources "/articles", ArticleController
+    resources "/", ArticleController
 
     resources "/users", UserController
 

@@ -17,7 +17,6 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li><%= link "Main", to: article_path(@conn, :show, "main") %></li>
             <%= if logged_in?(@conn) do %>
               <li><%= link current_user(@conn).username, to: user_path(@conn, :show, current_user(@conn).id) %></li>
               <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete %></li>
@@ -27,7 +26,7 @@
             <% end %>
           </ul>
         </nav>
-        <img class="logo" src="<%= static_path @conn, "/images/wikir.png" %>" />
+        <%= link raw("<img class=\"logo\" src=\"" <> static_path(@conn, "/images/logo.png") <> "\" />"), to: article_path(@conn, :show, "") %>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
