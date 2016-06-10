@@ -7,9 +7,8 @@ defmodule Wikir.ArticleController do
   # plug :scrub_params, "article" when action in [:create, :update]
 
   def index(conn, _params) do
-    articles = Repo.all(Article)
-    versions = Repo.all(Version)
-    render(conn, "index.html", articles: versions)
+    versions = Repo.all(from v in Version, group_by: v.article_id)
+    render(conn, "index.html", versions: versions)
   end
 
   def new(conn, _params) do
