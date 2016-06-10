@@ -1,10 +1,10 @@
 <div class="article-panel pull-right">
   <ul class="nav nav-pills">
     <li>
-      <%= link "Edit", to: article_path(@conn, :edit, @article) %>
+      <%= link "Edit", to: article_path @conn, :edit, @version.title %>
     </li>
     <li>
-      <%= link "Back", to: article_path(@conn, :index) %>
+      <%= link "Back", to: article_path @conn, :index %>
     </li>
   </ul>
 </div>
@@ -13,6 +13,6 @@
   <h1 class="title"><%= @version.title %></h1>
 
   <div class="content">
-    <%= raw Earmark.to_html(@version.content) %>
+    <%= raw Earmark.to_html @version.content %>
   </div>
 </div>
