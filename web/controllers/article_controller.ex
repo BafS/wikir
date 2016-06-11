@@ -28,7 +28,7 @@ defmodule Wikir.ArticleController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"article" => article_params}) do
+  def create(conn, %{"version" => article_params}) do
     changeset = Article.changeset(%Article{}, article_params)
 
     case Repo.insert(changeset) do
