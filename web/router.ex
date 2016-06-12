@@ -28,6 +28,7 @@ defmodule Wikir.Router do
     get    "/wikir-list", ArticleController, :index
     get    "/:title/versions", ArticleController, :versions
     get    "/:title/versions/:id", ArticleController, :version
+    get    "/:id/new", ArticleController, :new_title
     resources "/", ArticleController
   end
 

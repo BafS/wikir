@@ -12,19 +12,14 @@ defmodule Wikir.ArticleController do
   end
 
   def new(conn, _params) do
-
-    # IO.inspect _params
-    # case _params do
-      # {:title, _params} -> ptitle = "aaa"
-    # end
-    # if _params do
-    #   %{ "title" => ptitle } = _params
-    # end
-    # #
-    # unless ptitle do
-    # end
-
     changeset = Article.changeset(%Version{})
+    render(conn, "new.html", changeset: changeset)
+  end
+
+  # New page with pre-title set
+  def new_title(conn, %{"id" => title}) do
+    title = URI.decode_www_form(title)
+    changeset = Article.changeset(%Version{title: title})
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -60,7 +55,7 @@ defmodule Wikir.ArticleController do
 
     unless version_last do
       conn
-      |> redirect(to: article_path(conn, :new))
+      |> redirect(to: article_path(conn, :new_title, title))
     end
 
     render(conn, "show.html", version: version_last)
@@ -72,7 +67,7 @@ defmodule Wikir.ArticleController do
 
     unless version_last do
       conn
-      |> redirect(to: article_path(conn, :new))
+      |> redirect(to: article_path(conn, :new_title, title))
     end
 
     article = Repo.get!(Article, version_last.article_id)
