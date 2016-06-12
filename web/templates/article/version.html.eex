@@ -1,0 +1,7 @@
+<h2><%= @version.title %>: revision from <%= @version.inserted_at %> </h2>
+
+<div>
+  <%= @version.content %>
+</div>
+
+<%= link "Back to history", to: article_path(@conn, :versions, @version.title) %>

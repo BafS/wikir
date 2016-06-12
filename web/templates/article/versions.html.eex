@@ -13,7 +13,7 @@
 <%= for version <- @versions do %>
     <tr>
       <td class="text-left">
-        <%= link version.title, to: article_path(@conn, :show, version.title) %>
+        <%= link version.title, to: article_path(@conn, :version, version.title, version.id) %>
       </td>
       <td class="text-left">
         <%= if version.user do %>
@@ -31,3 +31,5 @@
 <% end %>
   </tbody>
 </table>
+
+<%= link "Back to the article", to: article_path(@conn, :show, List.first(@versions).title, class: "btn btn-default") %>

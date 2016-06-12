@@ -21,7 +21,7 @@ defmodule Wikir.ArticleController do
     #   %{ "title" => ptitle } = _params
     # end
     # #
-    # if !ptitle do
+    # unless ptitle do
     # end
 
     changeset = Article.changeset(%Version{})
@@ -58,7 +58,7 @@ defmodule Wikir.ArticleController do
     # Get last version (by updated_at)
     version_last = Repo.one(from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1)
 
-    if !version_last do
+    unless version_last do
       conn
       |> redirect(to: article_path(conn, :new))
     end
@@ -70,7 +70,7 @@ defmodule Wikir.ArticleController do
     title = URI.decode_www_form(title)
     version_last = Repo.one(from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1)
 
-    if !version_last do
+    unless version_last do
       conn
       |> redirect(to: article_path(conn, :new))
     end
@@ -119,6 +119,8 @@ defmodule Wikir.ArticleController do
   end
 
   # None CRUD method
+
+  # Show all version history
   def versions(conn, %{"title" => title}) do
     title = URI.decode_www_form(title)
 
@@ -129,5 +131,12 @@ defmodule Wikir.ArticleController do
     versions = Repo.all from v in Version, where: v.article_id == ^version_last.article_id, preload: [:user]
 
     render(conn, "versions.html", versions: versions)
+  end
+
+  # Show specific version
+  def version(conn, %{"title" => title, "id" => id}) do
+    version = Repo.one from v in Version, where: v.id == ^id
+
+    render(conn, "version.html", version: version)
   end
 end
