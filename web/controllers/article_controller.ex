@@ -53,6 +53,8 @@ defmodule Wikir.ArticleController do
   end
 
   def show(conn, %{"id" => title}) do
+    title = URI.decode_www_form(title)
+
     # Get last version (by updated_at)
     version_last = Repo.one(from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1)
 
@@ -65,6 +67,7 @@ defmodule Wikir.ArticleController do
   end
 
   def edit(conn, %{"id" => title}) do
+    title = URI.decode_www_form(title)
     version_last = Repo.one(from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1)
 
     if !version_last do
