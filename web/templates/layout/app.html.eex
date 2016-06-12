@@ -18,7 +18,8 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li><%= link "List articles", to: "/wikir:list" %></li>
+            <li><%= link "New article", to: "/new" %></li>
+            <li><%= link "List articles", to: "/wikir-list" %></li>
             <%= if logged_in?(@conn) do %>
               <li><%= link current_user(@conn).username, to: user_path(@conn, :show, current_user(@conn).id) %></li>
               <li><%= link "Logout", to: session_path(@conn, :delete) %></li>
