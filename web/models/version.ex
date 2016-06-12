@@ -7,12 +7,13 @@ defmodule Wikir.Version do
     field :content, :string
 
     belongs_to :article, Wikir.Article
+    belongs_to :user, Wikir.User
 
     timestamps
   end
 
   @required_fields ~w(title content article_id)
-  @optional_fields ~w()
+  @optional_fields ~w(user_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

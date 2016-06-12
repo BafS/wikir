@@ -35,6 +35,13 @@ defmodule Wikir.ArticleController do
       {:ok, _article} ->
           #article = Repo.one(from a in Article, where: a.title == ^article_params[:title])
           article_params = Map.put(article_params, "article_id", _article.id)
+
+          if current_user(conn) do
+            IO.puts '-- User is connected [debug] --'
+            article_params = Map.put(article_params, "user_id", current_user(conn).id)
+            IO.inspect article_params
+          end
+
           changeset2 = Version.changeset(%Version{}, article_params)
           Repo.insert(changeset2)
         conn
