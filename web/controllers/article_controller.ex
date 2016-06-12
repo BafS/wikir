@@ -36,8 +36,8 @@ defmodule Wikir.ArticleController do
           #article = Repo.one(from a in Article, where: a.title == ^article_params[:title])
           article_params = Map.put(article_params, "article_id", _article.id)
 
+          # If a user is logged, we add `user_id`
           if current_user(conn) do
-            IO.puts '-- User is connected [debug] --'
             article_params = Map.put(article_params, "user_id", current_user(conn).id)
             IO.inspect article_params
           end
@@ -86,13 +86,14 @@ defmodule Wikir.ArticleController do
     article = Repo.get!(Article, id)
     version_last = Repo.one(from v in Version, where: v.article_id == ^id, order_by: [desc: :updated_at], limit: 1)
     article_params = Map.put(article_params, "article_id", id)
-    IO.puts ">> DEBUG <<"
-    IO.inspect article_params
-    changeset = Version.changeset(%Version{}, article_params)
-    # changeset = Article.changeset(article, article_params)
 
-    # Version.new(conn, %{"id" => id, "article" => article_params})
-    # Repo.insert!(%Version{title: "Main", content: "# Main page with updated content"})
+    # If a user is logged, we add `user_id`
+    if current_user(conn) do
+      article_params = Map.put(article_params, "user_id", current_user(conn).id)
+      IO.inspect article_params
+    end
+
+    changeset = Version.changeset(%Version{}, article_params)
 
     case Repo.insert(changeset) do
       {:ok, article} ->
@@ -115,5 +116,18 @@ defmodule Wikir.ArticleController do
     conn
     |> put_flash(:info, "Article deleted successfully.")
     |> redirect(to: article_path(conn, :index))
+  end
+
+  # None CRUD method
+  def versions(conn, %{"title" => title}) do
+    title = URI.decode_www_form(title)
+
+    # Select the last version
+    version_last = Repo.one from v in Version, where: v.title == ^title, order_by: [desc: :updated_at], limit: 1
+
+    # Select all versions with the same article_id
+    versions = Repo.all from v in Version, where: v.article_id == ^version_last.article_id, preload: [:user]
+
+    render(conn, "versions.html", versions: versions)
   end
 end

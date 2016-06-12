@@ -1,6 +1,9 @@
 <div class="article-panel pull-right">
   <ul class="nav nav-pills">
     <li>
+      <%= link "History", to: article_path @conn, :versions, @version.title %>
+    </li>
+    <li>
       <%= link "Edit", to: article_path @conn, :edit, @version.title %>
     </li>
     <li>

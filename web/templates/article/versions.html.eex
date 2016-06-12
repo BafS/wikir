@@ -1,0 +1,33 @@
+<h2><%= List.first(@versions).title %>: version history</h2>
+
+<table class="table sortable">
+  <thead>
+    <tr>
+      <th>Article title</th>
+      <th>Username</th>
+      <th>Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for version <- @versions do %>
+    <tr>
+      <td class="text-left">
+        <%= link version.title, to: article_path(@conn, :show, version.title) %>
+      </td>
+      <td class="text-left">
+        <%= if version.user do %>
+          <%= link version.user.username, to: user_path(@conn, :show, version.user), class: "btn btn-xs" %>
+        <%= end %>
+      </td>
+      <td class="text-left">
+        <%= version.inserted_at %>
+      </td>
+      <td class="text-right">
+        <%= link "Edit", to: article_path(@conn, :edit, version.title), class: "btn btn-info btn-xs" %>
+        <%= link "Delete", to: article_path(@conn, :delete, version.title), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

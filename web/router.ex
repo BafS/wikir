@@ -23,10 +23,11 @@ defmodule Wikir.Router do
     get    "/logout", SessionController, :delete
     delete "/logout", SessionController, :delete
 
-    get    "/wikir-list", ArticleController, :index
-    resources "/", ArticleController
-
     resources "/users", UserController
+
+    get    "/wikir-list", ArticleController, :index
+    get    "/:title/versions", ArticleController, :versions
+    resources "/", ArticleController
   end
 
   # Other scopes may use custom stacks.
