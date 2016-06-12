@@ -1,23 +1,15 @@
-<h3>Personal information <%= link "Edit", to: user_path(@conn, :edit, @user), class: "badge" %></h3>
+<h2><%= @user.username %>: personal information</h2>
 
-<ul>
-  <li>
-    <strong>Username:</strong>
-    <%= @user.username %>
-  </li>
-
-  <li>
-    <strong>Password:</strong>
-    <%= @user.password %>
-  </li>
-</ul>
+<%= link "Edit my profile", to: user_path(@conn, :edit, @user), class: "btn btn-primary" %></h3>
 
 <h3>Articles created/edited</h3>
 
-<table class="table">
+<table class="table sortable">
   <thead>
     <tr>
       <th>Article title</th>
+      <th>Date</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +17,9 @@
     <tr>
       <td class="text-left">
         <%= link version.title, to: article_path(@conn, :show, version.title) %>
+      </td>
+      <td class="text-left">
+        <%= version.inserted_at %>
       </td>
       <td class="text-right">
         <%= link "Edit", to: article_path(@conn, :edit, version.title), class: "btn btn-info btn-xs" %>

@@ -1,10 +1,12 @@
 <h2>All articles</h2>
 
-<table class="table">
+<table class="table sortable">
   <thead>
     <tr>
       <th>Article title</th>
       <th>Username</th>
+      <th>Date</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -17,6 +19,9 @@
         <%= if version.user do %>
           <%= link version.user.username, to: user_path(@conn, :show, version.user), class: "btn btn-xs" %>
         <%= end %>
+      </td>
+      <td class="text-left">
+        <%= version.inserted_at %>
       </td>
       <td class="text-right">
         <%= link "Edit", to: article_path(@conn, :edit, version.title), class: "btn btn-info btn-xs" %>

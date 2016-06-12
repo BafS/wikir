@@ -1,6 +1,6 @@
 <h2>Listing users</h2>
 
-<table class="table">
+<table class="table sortable">
   <thead>
     <tr>
       <th>Username</th>
