@@ -33,7 +33,8 @@ defmodule Wikir.UserController do
     # If not admin, can only show id where id = session.id
 
     user = Repo.get!(User, id)
-    render(conn, "show.html", user: user)
+    versions = Repo.all(from v in Wikir.Version, where: v.user_id == ^id)
+    render(conn, "show.html", user: user, versions: versions)
   end
 
   def edit(conn, %{"id" => id}) do

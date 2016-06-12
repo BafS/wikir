@@ -1,7 +1,6 @@
-<h2>Show user</h2>
+<h3>Personal information <%= link "Edit", to: user_path(@conn, :edit, @user), class: "badge" %></h3>
 
 <ul>
-
   <li>
     <strong>Username:</strong>
     <%= @user.username %>
@@ -11,8 +10,27 @@
     <strong>Password:</strong>
     <%= @user.password %>
   </li>
-
 </ul>
 
-<%= link "Edit", to: user_path(@conn, :edit, @user) %>
-<%= link "Back", to: user_path(@conn, :index) %>
+<h3>Articles created/edited</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Article title</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for version <- @versions do %>
+    <tr>
+      <td class="text-left">
+        <%= link version.title, to: article_path(@conn, :show, version.title) %>
+      </td>
+      <td class="text-right">
+        <%= link "Edit", to: article_path(@conn, :edit, version.title), class: "btn btn-info btn-xs" %>
+        <%= link "Delete", to: article_path(@conn, :delete, version.title), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
