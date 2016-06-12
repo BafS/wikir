@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Article title</th>
+      <th>Username</th>
     </tr>
   </thead>
   <tbody>
@@ -11,6 +12,11 @@
     <tr>
       <td class="text-left">
         <%= link version.title, to: article_path(@conn, :show, version.title) %>
+      </td>
+      <td class="text-left">
+        <%= if version.user do %>
+          <%= link version.user.username, to: user_path(@conn, :show, version.user), class: "btn btn-xs" %>
+        <%= end %>
       </td>
       <td class="text-right">
         <%= link "Edit", to: article_path(@conn, :edit, version.title), class: "btn btn-info btn-xs" %>

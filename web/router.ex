@@ -20,9 +20,10 @@ defmodule Wikir.Router do
 
     get    "/login",  SessionController, :new
     post   "/login",  SessionController, :create
-    get "/logout", SessionController, :delete
+    get    "/logout", SessionController, :delete
     delete "/logout", SessionController, :delete
 
+    get    "/wikir:list", ArticleController, :index
     resources "/", ArticleController
 
     resources "/users", UserController
