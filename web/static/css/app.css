@@ -85,3 +85,11 @@ form.link, form.button {
 .article textarea {
   min-height: 150px;
 }
+
+.article img {
+  margin: 2px;
+}
+
+.article .thumbnail {
+  margin: 5px;
+}
