@@ -13,6 +13,13 @@ defmodule Wikir.Router do
     plug :accepts, ["json"]
   end
 
+  # API scope
+  scope "/api", Wikir do
+    pipe_through :api
+
+    resources "/stats", StatisticController
+  end
+
   scope "/", Wikir do
     pipe_through :browser # Use the default browser stack
 
@@ -25,15 +32,11 @@ defmodule Wikir.Router do
 
     resources "/users", UserController
 
+    get    "/wikir-stats", StatisticController, :index
     get    "/wikir-list", ArticleController, :index
     get    "/:title/versions", ArticleController, :versions
     get    "/:title/versions/:id", ArticleController, :version
     get    "/:id/new", ArticleController, :new_title
     resources "/", ArticleController
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", Wikir do
-  #   pipe_through :api
-  # end
 end
